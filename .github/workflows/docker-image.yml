@@ -30,12 +30,12 @@ jobs:
       # - name: Push Docker image
       #   run: docker push lucassusinedu/sarcng-repo:latest
 
-      - name: Install SSH key
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          name: id_rsa
-          known_hosts: ec2-44-195-62-118.compute-1.amazonaws.com
+      # - name: Install SSH key
+      #   uses: shimataro/ssh-key-action@v2
+      #   with:
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     name: id_rsa
+      #     known_hosts: ec2-44-195-62-118.compute-1.amazonaws.com
 
       - name: Deploy to EC2 instance
-        run: ssh -i id_rsa ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
+        run: ssh -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com
