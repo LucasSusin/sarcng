@@ -23,10 +23,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and tag Docker image
-        run: docker build -t your-docker-repo:latest .
+        run: docker build -t lucassusinedu/sarcng-repo:latest .
 
       - name: Push Docker image
-        run: docker push your-docker-repo:latest
+        run: docker push lucassusinedu/sarcng-repo:latest
 
       - name: Deploy to EC2 instance
         run: |
