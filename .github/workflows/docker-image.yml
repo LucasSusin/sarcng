@@ -34,5 +34,5 @@ jobs:
       - name: Deploy to EC2 instance
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          echo "$REPO" > repo
+          echo "$REPO" > repo && chmod 600 private_key
           ssh -o "StrictHostKeyChecking no" -i private_key ubuntu@44.195.62.118 "docker pull repo:latest && docker run -d -p 80:80 repo:latest"
