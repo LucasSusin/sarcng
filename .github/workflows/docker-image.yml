@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
 
       - name: Set up Docker
         uses: docker/setup-buildx-action@v1
@@ -30,4 +32,5 @@ jobs:
 
       - name: Deploy to EC2 instance
         run: |
-          ssh -o "StrictHostKeyChecking no" -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o "StrictHostKeyChecking no" -i private_key ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
