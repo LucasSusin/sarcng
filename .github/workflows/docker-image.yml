@@ -18,8 +18,12 @@ jobs:
           java-package: jdk
           cache: maven
 
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
+      - name: Build and tag Docker image
+        run: docker build -t your-docker-repo:latest .
 
-      - name: Exec Jar File
-        run: sudo kill -9 `sudo lsof -t -i:8080` & sudo java -jar /home/ubuntu/actions-runner/_work/sarcng/sarcng/target/sarc-api-2.1.5.RELEASE.jar &
+      - name: Push Docker image
+        run: docker push your-docker-repo:latest
+
+      - name: Deploy to EC2 instance
+        run: |
+          ssh -o "StrictHostKeyChecking no" -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@44.195.62.118 "docker pull your-docker-repo:latest && docker run -d -p 80:80 your-docker-repo:latest"
