@@ -39,4 +39,4 @@ jobs:
 
       - name: Deploy to EC2 instance
         run: |
-          ssh -o "StrictHostKeyChecking no" ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
+          ssh -o "StrictHostKeyChecking no" -i id_rsa ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
