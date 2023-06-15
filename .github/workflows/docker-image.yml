@@ -30,7 +30,12 @@ jobs:
       # - name: Push Docker image
       #   run: docker push lucassusinedu/sarcng-repo:latest
 
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          name: id_rsa
+
       - name: Deploy to EC2 instance
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
-          ssh -o "StrictHostKeyChecking no" -i private_key ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
+          ssh -o "StrictHostKeyChecking no" ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
