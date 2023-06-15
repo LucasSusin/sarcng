@@ -40,4 +40,4 @@ jobs:
       - name: Deploy to EC2 instance
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key 
-          ssh -i private_key ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com
+          ssh -o StrictHostKeyChecking=no -i private_key ubuntu@ec2-44-195-62-118.compute-1.amazonaws.com
