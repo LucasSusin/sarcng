@@ -22,12 +22,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and tag Docker image
-        run: docker build -t lucassusinedu/sarcng-repo:latest .
+      # - name: Build and tag Docker image
+      #   run: docker build -t lucassusinedu/sarcng-repo:latest .
 
-      - name: Push Docker image
-        run: docker push lucassusinedu/sarcng-repo:latest
+      # - name: Push Docker image
+      #   run: docker push lucassusinedu/sarcng-repo:latest
 
       - name: Deploy to EC2 instance
         run: |
-          ssh -o "StrictHostKeyChecking no" -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@44.195.62.118 "docker pull your-docker-repo:latest && docker run -d -p 80:80 your-docker-repo:latest"
+          ssh -o "StrictHostKeyChecking no" -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@44.195.62.118 "docker pull lucassusinedu/sarcng-repo:latest && docker run -d -p 80:80 lucassusinedu/sarcng-repo:latest"
